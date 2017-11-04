@@ -16,6 +16,6 @@
     "express": "~4.15.5",
     "express-useragent": "^1.0.8",
     "jade": "~1.11.0",
-    "morgan": "~1.9.0",
+    "morgan": "~1.9.0"
   }
 }
