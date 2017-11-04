@@ -3,9 +3,10 @@ var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var cors = require('cors');
+var userAgent = require('express-useragent');
 
 var index = require('./routes/index');
-var users = require('./routes/users');
 
 var app = express();
 
@@ -18,9 +19,24 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
 
 app.use('/', index);
-app.use('/users', users);
+
+// api endpoint
+var api = "/api/whoami";
+
+app.get(api, function(req, res, next) {
+  var language = req.acceptsLanguages();
+  var userAgent = req.get('User-Agent');
+  var ipaddress = req.ip;
+
+  res.json({
+    'ipaddress': ipaddress,
+    'language': language[0],
+    'user agent': userAgent
+  });
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
