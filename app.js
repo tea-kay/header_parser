@@ -4,7 +4,6 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
-var userAgent = require('express-useragent');
 
 var index = require('./routes/index');
 
@@ -28,8 +27,8 @@ var api = "/api/whoami";
 
 app.get(api, function(req, res, next) {
   var language = req.acceptsLanguages();
-  var userAgent = req.get('User-Agent');
   var ipaddress = req.ip;
+  var userAgent = req.get("User-Agent");
 
   res.json({
     'ipaddress': ipaddress,
